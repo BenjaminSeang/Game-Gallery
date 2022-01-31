@@ -17,6 +17,7 @@ function App() {
         <OneGame path="/game/:id" />
         <EditGame path="/game/edit/:id" />
       </Router>
+      
     </div>
   );
 }

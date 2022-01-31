@@ -90,3 +90,6 @@ select {
     text-align: center;
 }
 
+.search-bar{
+    height: 30px;
+}

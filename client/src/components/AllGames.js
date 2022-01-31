@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Link} from '@reach/router';
+import Header from './Header';
+import SearchBar from './SearchBar';
 
 
 const AllGames = (props) =>{
 
 
     const [gameList, setGameList] = useState([]);
-
+    const [searchName, setSearchName] = useState("");
+    
     useEffect(()=>{
         axios.get("http://localhost:8000/api/games")
             .then((res)=>{
@@ -31,11 +34,12 @@ const AllGames = (props) =>{
 
     }
 
-
     return(
         <div className ="wrapper">
+
             <header>
-                <h1>Game Gallery</h1>
+                <Header titleText={"Game Gallery"} />
+                <SearchBar setGameList={setGameList} searchName={searchName} setSearchName={setSearchName}/>
                 <button>
                     <Link to={"/new"}>Add a New Game</Link>
                 </button>

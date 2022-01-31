@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {Link, navigate} from '@reach/router';
+import Header from './Header';
+import GoBackToHomeButton from './GoBackToHomeButton';
 
 
 
@@ -42,10 +44,8 @@ const OneGame = (props) =>{
     return(
         <div className='wrapper'>
             <header>
-                <h1>{game.name}</h1>
-                <button>
-                    <Link to={"/"}>Return Home</Link>
-                </button>              
+                <Header titleText = {game.name}/>
+                <GoBackToHomeButton/>             
             </header>
             <div style={{margin: '10px'}}>
                 <img src={game.image} alt="game image"/>

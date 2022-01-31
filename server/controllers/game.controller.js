@@ -16,6 +16,21 @@ module.exports = {
             })
     },
 
+    findAllGamesByName: (req, res) =>{
+        let name = req.params.name;
+        console.log(name);
+        //find all games which their name contains name, option i is for ingnoring cases
+        Game.find({"name" : {$regex: name, $options: "i" }})
+            .then((allGamesByName)=>{
+                console.log(allGamesByName);
+                res.json(allGamesByName);
+            })
+            .catch((err)=>{
+                console.log("Find game by name failed")
+                res.json({message: "Something went rong in findAllGamesByName", error: err})
+            });
+    },
+
     createNewGame: (req, res)=>{
         Game.create(req.body)
             .then((newGame)=>{

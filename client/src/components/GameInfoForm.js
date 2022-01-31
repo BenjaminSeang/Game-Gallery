@@ -1,66 +1,30 @@
-import React, {useState} from 'react';
-import {Link, navigate} from '@reach/router';
+import React, { useState } from 'react';
+import { Link, navigate } from '@reach/router';
 import axios from 'axios';
-import GameInfoForm from './GameInfoForm';
-import Header from './Header';
-import GoBackToHomeButton from './GoBackToHomeButton';
 
+const GameInfoForm = (props) => {
+    
+    const {game, setGame, submitHandler, errors, buttonText} = props;
 
-const NewGame = (props) =>{
+    const onChangeHandler = (e)=>{
 
-    const [errors, setError] = useState({})
+        const newStateObject = {...game};
+        newStateObject[e.target.name]  = e.target.value;
 
-    const [newGame, setNewGame] = useState({
-        name: "",
-        yearReleased: "",
-        genre: "",
-        image: "",
-        rating: "",
-        company: ""
-    })
+        console.log("e.target.name = ", e.target.name)
+        console.log("e.target.value = ", e.target.value)
 
-
-
-    const submitHandler = (e)=>{
-        e.preventDefault();
-        axios.post("http://localhost:8000/api/games", newGame)
-        .then((res)=>{
-            console.log(res);
-            console.log(res.data);
-            navigate("/");
-        })
-        .catch((err)=>{
-            console.log(err);
-            console.log("err.response:", err.response);
-            console.log("err.response.data:", err.response.data);
-            console.log("err.response.data.errors:", err.response.data.errors);
-            setError(err.response.data.errors)
-        })
-
+        setGame(newStateObject);
     }
 
     return(
         <div className='wrapper'>
-            <header>
-                <Header titleText={"Add a Game"} />
-                <GoBackToHomeButton />
-            </header>
 
-            <GameInfoForm 
-            game = {newGame}
-            setGame = {setNewGame}
-            submitHandler = {submitHandler}
-            errors = {errors}
-            buttonText = {"Add Game"}
-            />
-            
-            
-            {/*
             <form onSubmit={submitHandler}>
 
                 <div>
                     <label>Name</label>
-                    <input value={name} onChange={(e)=>setName(e.target.value)} type="text" />
+                    <input value={game.name} name="name" onChange={(e)=>onChangeHandler(e)} type="text" />
 
                     {
                         errors.name?
@@ -71,7 +35,7 @@ const NewGame = (props) =>{
 
                 <div>
                     <label>Year Released</label>
-                    <input value={yearReleased} onChange={(e)=>setYearReleased(e.target.value)} type="number" />
+                    <input value={game.yearReleased} name="yearReleased" onChange={(e)=>onChangeHandler(e)} type="number" />
                     {
                         errors.yearReleased?
                         <span>{errors.yearReleased.message}</span>
@@ -81,7 +45,7 @@ const NewGame = (props) =>{
 
                 <div>
                     <label>Genre</label>
-                    <select value={genre} onChange={(e)=>setGenre(e.target.value)} name="genre">
+                    <select value={game.genre} name="genre" onChange={(e)=>onChangeHandler(e)} name="genre">
                         <option value="none" defaultValue hidden>Select a Genre</option>
                         <option value="Action">Action</option>
                         <option value="Platformer">Platformer</option>
@@ -105,7 +69,7 @@ const NewGame = (props) =>{
 
                 <div>
                     <label>Image</label>
-                    <input value={image} onChange={(e)=>setImage(e.target.value)} type="text" />
+                    <input value={game.image} name="image" onChange={(e)=>onChangeHandler(e)} type="text" />
 
                     {
                         errors.image?
@@ -116,7 +80,7 @@ const NewGame = (props) =>{
 
                 <div>
                     <label>Rating</label>
-                    <select value={rating} onChange={(e)=>setRating(e.target.value)} name="rating">
+                    <select value={game.rating} rating="rating" onChange={(e)=>onChangeHandler(e)} name="rating">
                         <option value="none" defaultValue hidden>Select a Rating</option>
                         <option value="AO">AO</option>
                         <option value="MT">MT</option>
@@ -135,7 +99,7 @@ const NewGame = (props) =>{
 
                 <div>
                     <label>Company</label>
-                    <input value={company} onChange={(e)=>setCompany(e.target.value)} type="text" />
+                    <input value={game.company} name= "company" onChange={(e)=>onChangeHandler(e)} type="text" />
 
                     {
                         errors.company?
@@ -144,15 +108,14 @@ const NewGame = (props) =>{
                     }
                 </div>
 
-                <button>Add Game</button>
+                <button>{buttonText}</button>
 
 
             </form>
-            */}
             
         </div>
     )
+
 }
 
-
-export default NewGame;
+export default GameInfoForm;

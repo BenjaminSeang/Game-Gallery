@@ -41,6 +41,7 @@ const GameSchema = new mongoose.Schema({
 
     rating:{
         type: String,
+        required: [true, "Please enter a rating"],
         enum: [
             "AO",
             "MT",
